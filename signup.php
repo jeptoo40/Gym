@@ -1,21 +1,21 @@
 <?php
-$host = "localhost";
-$user = "root";   
-$pass = "1234";        
-$db = "gym_db";     
+include 'connect.php';
 
-$conn = new mysqli($host, $user, $pass, $db);
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $fullname = $_POST['fullname'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // hash password
 
-$fullname = $_POST['fullname'];
-$email = $_POST['email'];
-$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $stmt = $conn->prepare("INSERT INTO users (fullname, email, password) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $fullname, $email, $password);
 
-$sql = "INSERT INTO users (fullname, email, password) VALUES ('$fullname', '$email', '$password')";
-if ($conn->query($sql) === TRUE) {
-    echo "Account created successfully!";
-} else {
-    echo "Error: " . $conn->error;
+    if ($stmt->execute()) {
+        echo "Account created successfully!";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conn->close();
 }
-$conn->close();
 ?>
