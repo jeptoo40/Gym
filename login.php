@@ -1,29 +1,36 @@
 <?php
 session_start();
-include 'connect.php';
+include("connect.php"); // your DB connection file
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-    $sql = "SELECT * FROM users WHERE email='$email' LIMIT 1";
-    $result = $conn->query($sql);
+    // Check if user exists
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
 
-        if (password_verify($password, $user['password'])) {
-            // Store user info in session
-            $_SESSION['user_name'] = $user['fullname'];
-            $_SESSION['user_email'] = $user['email'];
+        // ✅ verify hashed password
+        if (password_verify($password, $row['password'])) {
+            // set session
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['user_name'] = $row['fullname']; // adjust column name if different
+            $_SESSION['user_email'] = $row['email'];
 
-            header("Location: dashboard.php"); // Redirect to dashboard
+            // redirect to dashboard
+            header("Location: dashboard.php");
             exit();
         } else {
-            echo "Invalid password!";
+            $error = "Invalid password.";
         }
     } else {
-        echo "No account found!";
+        $error = "No account found with that email.";
     }
 }
 ?>
