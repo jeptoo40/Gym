@@ -247,31 +247,33 @@
     <span class="close" onclick="closeModal('signupModal')">&times;</span>
     <a class="logo">Finess <span>Fitness</span></a>
     <h2>Create Your Account</h2>
-    <form onsubmit="return validateSignup()">
+    <form action="signup.php" method="POST" onsubmit="return validateSignup()">
+
       <label for="signupName">Full Name</label>
-      <input type="text" id="signupName" placeholder="Your name" required>
-      
+      <input type="text" name="fullname" id="signupName" placeholder="Your name" required>
+    
       <label for="signupEmail">Email Address</label>
-      <input type="email" id="signupEmail" placeholder="your email" required>
-      
+      <input type="email" name="email" id="signupEmail" placeholder="your email" required>
+    
       <label for="signupPass">Password <small>(Minimum 8 characters)</small></label>
-      <input type="password" id="signupPass" minlength="8" required>
-      
+      <input type="password" name="password" id="signupPass" minlength="8" required>
+    
       <label for="signupConfirm">Confirm Password</label>
       <input type="password" id="signupConfirm" required>
-      
+    
       <label class="checkbox">
         <input type="checkbox" required />
         I agree to the terms and service
       </label>
-
+    
       <button type="submit">Create your account</button>
-
+    
       <p class="subtext">No contracts. No hidden fees. No credit-card required.</p>
       <p>Already have an account? 
         <a href="#" onclick="switchModal('signupModal','loginModal')">Login here</a>
       </p>
     </form>
+    
   </div>
 </div>
 
