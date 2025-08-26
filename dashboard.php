@@ -262,9 +262,19 @@ $userRole = "Member"; // later you can make this dynamic from DB
         </div>
 
         <div class="spacer"></div>
-        <button class="nav-item"><i class='bx bx-cog'></i><span class="label">Settings</span></button>
-      </nav>
 
+<!-- Settings -->
+<a href="#" class="nav-item">
+  <i class='bx bx-cog'></i>
+  <span class="label">Settings</span>
+</a>
+
+<!-- Logout -->
+<a href="logout.php" class="nav-item logout">
+  <i class='bx bx-log-out'></i>
+  <span class="label">Logout</span>
+</a>
+</nav>
       <div class="profile">
         <div class="pic"></div>
         <div class="meta">
@@ -287,7 +297,8 @@ $userRole = "Member"; // later you can make this dynamic from DB
       <!-- Welcome -->
       <section class="welcome">
         <div>
-        <div class="name"><?php echo htmlspecialchars($userName); ?></div>
+        <div class="title">Welcome back, <?php echo htmlspecialchars($userName); ?>! 👋</div>
+
 
           <div class="subtitle">Here’s your snapshot for this week.</div>
         </div>
