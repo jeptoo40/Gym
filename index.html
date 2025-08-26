@@ -32,10 +32,15 @@
       <li><a href="#review">Review</a></li>
     </ul>
 
- 
+    
     <div class="top-btn">
-      <a href="#" class="nav-btn">Join Us</a>
+      <a href="#" class="nav-btn" onclick="openModal('loginModal')">Join Us</a>
     </div>
+    
+    <div class="top-btn">
+      <a href="#" class="nav-btn" onclick="openModal('signupModal')">Register</a>
+    </div>
+    
   </header>
   
   <section class="home display" id="home">
@@ -232,5 +237,256 @@
   </script>
   <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
   <script src="script.js"></script>
+
+
+
+<!-- Signup Modal -->
+<div id="signupModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('signupModal')">&times;</span>
+    <a class="logo">Finess <span>Fitness</span></a>
+    <h2>Create Your Account</h2>
+    <form onsubmit="return validateSignup()">
+      <label for="signupName">Full Name</label>
+      <input type="text" id="signupName" placeholder="Your name" required>
+      
+      <label for="signupEmail">Email Address</label>
+      <input type="email" id="signupEmail" placeholder="you@example.com" required>
+      
+      <label for="signupPass">Password <small>(Minimum 8 characters)</small></label>
+      <input type="password" id="signupPass" minlength="8" required>
+      
+      <label for="signupConfirm">Confirm Password</label>
+      <input type="password" id="signupConfirm" required>
+      
+      <label class="checkbox">
+        <input type="checkbox" required />
+        I agree to the terms and service
+      </label>
+
+      <button type="submit">Create your account</button>
+
+      <p class="subtext">No contracts. No hidden fees. No credit-card required.</p>
+      <p>Already have an account? 
+        <a href="#" onclick="switchModal('signupModal','loginModal')">Login here</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('loginModal')">&times;</span>
+    <a class="logo">Finess <span>Fitness</span></a>
+    <h2>Login</h2>
+    <form>
+      <label for="loginEmail">Email Address</label>
+      <input type="email" id="loginEmail" placeholder="you@example.com" required>
+      
+      <label for="loginPass">Password</label>
+      <input type="password" id="loginPass" required>
+      
+      <button type="submit">Login</button>
+
+      <p>Don’t have an account? 
+        <a href="#" onclick="switchModal('loginModal','signupModal')">Sign up here</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+
+<style>
+/* Modal Base */
+/* ==== Modal Styling ==== */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-content {
+  background: #fff;
+  max-width: 420px;
+  width: 100%;
+  margin: auto;
+  padding: 30px 25px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* Close button */
+.close {
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #555;
+}
+.close:hover {
+  color: #000;
+}
+
+/* Logo */
+.logo {
+  display: block;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #222;
+  text-decoration: none;
+  margin-bottom: 15px;
+}
+.logo span {
+  color: #39e6dd; /* highlight color */
+}
+
+/* Form */
+.modal-content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content label {
+  margin-top: 12px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #444;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="password"] {
+  padding: 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.modal-content input:focus {
+  border-color: #39e6dd;
+  outline: none;
+}
+
+/* Checkbox */
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #444;
+}
+.checkbox input {
+  margin-right: 8px;
+}
+
+/* Button */
+.modal-content button {
+  margin-top: 18px;
+  padding: 12px;
+  background: #39e6dd;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.modal-content button:hover {
+  background: #2ac3bd;
+}
+
+/* Subtext */
+.subtext {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 10px;
+  color: #555;
+}
+.modal-content p {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 14px;
+}
+.modal-content p a {
+  color: #39e6dd;
+  text-decoration: none;
+}
+.modal-content p a:hover {
+  text-decoration: underline;
+}
+
+
+</style>
+
+<script>
+function openModal(id) {
+  document.getElementById(id).style.display = 'flex';
+}
+function closeModal(id) {
+  document.getElementById(id).style.display = 'none';
+}
+function switchModal(current, next) {
+  closeModal(current);
+  openModal(next);
+}
+function validateSignup() {
+  const pass = document.getElementById('signupPass').value;
+  const confirm = document.getElementById('signupConfirm').value;
+  if (pass !== confirm) {
+    alert("Passwords do not match!");
+    return false;
+  }
+  return true;
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
