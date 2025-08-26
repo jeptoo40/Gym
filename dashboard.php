@@ -268,7 +268,8 @@ $userRole = "Member"; // later you can make this dynamic from DB
       <div class="profile">
         <div class="pic"></div>
         <div class="meta">
-          <div class="name">Brenda</div>
+        <div class="name"><?php echo htmlspecialchars($userName); ?></div>
+
           <div class="role">Member</div>
         </div>
       </div>
@@ -286,7 +287,8 @@ $userRole = "Member"; // later you can make this dynamic from DB
       <!-- Welcome -->
       <section class="welcome">
         <div>
-          <div class="title">Welcome back, Brenda! 👋</div>
+        <div class="name"><?php echo htmlspecialchars($userName); ?></div>
+
           <div class="subtitle">Here’s your snapshot for this week.</div>
         </div>
         <div class="actions">
