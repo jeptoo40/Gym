@@ -2,29 +2,28 @@
 session_start();
 include 'connect.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows === 1) {
+    $sql = "SELECT * FROM users WHERE email='$email' LIMIT 1";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
+
         if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['fullname'] = $user['fullname'];
-            echo "Login successful!";
+            // Store user info in session
+            $_SESSION['user_name'] = $user['fullname'];
+            $_SESSION['user_email'] = $user['email'];
+
+            header("Location: dashboard.php"); // Redirect to dashboard
+            exit();
         } else {
-            echo "Wrong password!";
+            echo "Invalid password!";
         }
     } else {
-        echo "No account found with that email!";
+        echo "No account found!";
     }
-    
-    $stmt->close();
-    $conn->close();
 }
 ?>
