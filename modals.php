@@ -66,3 +66,34 @@
     </form>
   </div>
 </div>
+<script>
+const bookingForm = document.getElementById('bookingForm');
+const bookingMsg = document.getElementById('bookingMsg');
+
+bookingForm.addEventListener('submit', function(e){
+    e.preventDefault(); // prevent normal form submission
+
+    const formData = new FormData(bookingForm);
+
+    fetch('booking.php', { // make sure this points to your PHP script
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success){
+            bookingMsg.style.color = 'lightgreen';
+            bookingMsg.textContent = data.message;
+            bookingForm.reset(); // clear form
+        } else {
+            bookingMsg.style.color = 'red';
+            bookingMsg.textContent = data.message;
+        }
+    })
+    .catch(err => {
+        bookingMsg.style.color = 'red';
+        bookingMsg.textContent = 'Error booking session. Try again.';
+        console.error(err);
+    });
+});
+</script>

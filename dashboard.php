@@ -222,6 +222,48 @@ $userRole = "Member"; // later you can make this dynamic from DB
     .quick .btn{padding:12px 16px}
 
 
+
+
+
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #444;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+
+
+
+    
+
     .nav-item {
   text-decoration: none;   
   color: inherit;         
@@ -248,11 +290,12 @@ $userRole = "Member"; // later you can make this dynamic from DB
       <nav>
         <button class="nav-item active"><i class='bx bx-home'></i><span class="label">Home</span></button>
         <button class="nav-item"><i class='bx bx-dumbbell'></i><span class="label">Workouts</span></button>
+        
         <button class="nav-item"><i class='bx bx-bowl-hot'></i><span class="label">Nutrition</span></button>
 
         <div class="dropdown" id="dd-gym">
           <button type="button">
-            <span class="left"><i class='bx bx-building-house'></i><span class="label">Gym Types</span></span>
+            <span class="left"><i class='bx bx-building-house'></i><span class="label">Gym Activities</span></span>
             <i class='bx bx-chevron-down chev'></i>
           </button>
           <div class="menu">
@@ -271,7 +314,7 @@ $userRole = "Member"; // later you can make this dynamic from DB
           </button>
           <div class="menu">
             <a href="#">Pricing</a>
-            <a href="#">Reservation / Booking</a>
+            <a class="btn" id="bookSessionBtn"><i class='bx bx-calendar'></i>Book Session</a>
           </div>
         </div>
 
@@ -315,10 +358,15 @@ $userRole = "Member"; // later you can make this dynamic from DB
     <div class="subtitle">Here’s your snapshot for this week.</div>
   </div>
   <div class="actions">
-    <a class="btn primary"><i class='bx bx-play-circle'></i>Start Workout</a>
-    <a class="btn" id="logProgressBtn"><i class='bx bx-edit'></i>Log Progress</a>
-    <a class="btn" id="bookSessionBtn"><i class='bx bx-calendar'></i>Book Session</a>
-  </div>
+  <button class="btn primary" id="startWorkoutBtn"><i class='bx bx-play-circle'></i>Start Workout</button>
+  <button class="btn" id="logProgressBtn"><i class='bx bx-edit'></i>Log Progress</button>
+ 
+  <a class="btn" id="bookSessionBtn1"><i class='bx bx-calendar'></i>Book Session</a>
+
+
+
+</div>
+
 </section>
 
 <!-- Include the modals here -->
@@ -334,6 +382,11 @@ $userRole = "Member"; // later you can make this dynamic from DB
     document.getElementById('bookSessionModal').style.display = 'block';
   });
 
+
+  document.getElementById('bookSessionBtn1').addEventListener('click', () => {
+  document.getElementById('bookSessionModal').style.display = 'block';
+});
+
   // Close modals
   function closeModal(id){
     document.getElementById(id).style.display = 'none';
@@ -345,7 +398,7 @@ $userRole = "Member"; // later you can make this dynamic from DB
       <section class="grid">
         <div class="card kpi">
           <div>
-            <div class="meta">Workouts Completed</div>
+            <div class="meta">Workouts To Complete</div>
             <div class="value">12</div>
             <div class="spark">+3 this week</div>
           </div>
@@ -387,7 +440,7 @@ $userRole = "Member"; // later you can make this dynamic from DB
 
 <div class="card stats">
   <div class="stat">
-    <div class="label">Steps</div>
+    <div class="label">Steps To Take</div>
     <div class="num">8,932</div>
   </div>
   <div class="stat">
@@ -395,11 +448,11 @@ $userRole = "Member"; // later you can make this dynamic from DB
     <div class="num" id="activeMinutes">0 Today</div>
   </div>
   <div class="stat">
-    <div class="label">Water Intake</div>
-    <div class="num">2.1 L</div>
+    <div class="label">Take Water</div>
+    <div class="num">2.7Ltrs a Day</div>
   </div>
   <div class="stat">
-    <div class="label">Sleep</div>
+    <div class="label">Enough Sleep</div>
     <div class="num">7h 12m</div>
   </div>
 </div>
