@@ -285,17 +285,18 @@
     <h2>Login</h2>
     <form action="login.php" method="POST">
       <label for="loginEmail">Email Address</label>
-      <input type="email" id="loginEmail" placeholder="your email" required>
+      <input type="email" id="loginEmail" name="email" placeholder="your email" required>
       
       <label for="loginPass">Password</label>
-      <input type="password" id="loginPass" required>
+      <input type="password" id="loginPass" name="password" placeholder="your password" required>
       
       <button type="submit">Login</button>
-
+    
       <p>Don’t have an account? 
         <a href="#" onclick="switchModal('loginModal','signupModal')">Sign up here</a>
       </p>
     </form>
+    
   </div>
 </div>
 

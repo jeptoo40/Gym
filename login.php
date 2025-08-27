@@ -1,36 +1,38 @@
 <?php
+ob_start(); // ensure no output before headers
 session_start();
-include("connect.php"); // your DB connection file
+include("connect.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
+    $email = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
 
-    // Check if user exists
-    $sql = "SELECT * FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    if (!empty($email) && !empty($password)) {
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result->num_rows === 1) {
-        $row = $result->fetch_assoc();
+        if ($result->num_rows === 1) {
+            $row = $result->fetch_assoc();
 
-        // ✅ verify hashed password
-        if (password_verify($password, $row['password'])) {
-            // set session
-            $_SESSION['user_id'] = $row['id'];
-            $_SESSION['user_name'] = $row['fullname']; // adjust column name if different
-            $_SESSION['user_email'] = $row['email'];
+            // ✅ Verify hashed password
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['user_name'] = $row['fullname'];
+                $_SESSION['user_email'] = $row['email'];
 
-            // redirect to dashboard
-            header("Location: dashboard.php");
-            exit();
+                header("Location: dashboard.php");
+                exit();
+            } else {
+                echo "❌ Invalid password.";
+            }
         } else {
-            $error = "Invalid password.";
+            echo "❌ No account found with that email.";
         }
     } else {
-        $error = "No account found with that email.";
+        echo "❌ Please enter both email and password.";
     }
 }
 ?>
