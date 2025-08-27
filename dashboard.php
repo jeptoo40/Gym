@@ -220,6 +220,20 @@ $userRole = "Member"; // later you can make this dynamic from DB
       display:flex; gap:12px; flex-wrap:wrap;
     }
     .quick .btn{padding:12px 16px}
+
+
+    .nav-item {
+  text-decoration: none;   
+  color: inherit;         
+  display: flex;         
+  align-items: center;
+  gap: 8px;               
+}
+
+.nav-item.logout {
+  color: red; 
+}
+
   </style>
 </head>
 <body>
@@ -296,18 +310,36 @@ $userRole = "Member"; // later you can make this dynamic from DB
 
       <!-- Welcome -->
       <section class="welcome">
-        <div>
-        <div class="title">Welcome back, <?php echo htmlspecialchars($userName); ?>! 👋</div>
+  <div>
+    <div class="title">Welcome back, <?php echo htmlspecialchars($userName); ?>! 👋</div>
+    <div class="subtitle">Here’s your snapshot for this week.</div>
+  </div>
+  <div class="actions">
+    <a class="btn primary"><i class='bx bx-play-circle'></i>Start Workout</a>
+    <a class="btn" id="logProgressBtn"><i class='bx bx-edit'></i>Log Progress</a>
+    <a class="btn" id="bookSessionBtn"><i class='bx bx-calendar'></i>Book Session</a>
+  </div>
+</section>
 
+<!-- Include the modals here -->
+<?php include('modals.php'); ?> <!-- This file contains logProgressModal & bookSessionModal -->
 
-          <div class="subtitle">Here’s your snapshot for this week.</div>
-        </div>
-        <div class="actions">
-          <a class="btn primary"><i class='bx bx-play-circle'></i>Start Workout</a>
-          <a class="btn"><i class='bx bx-edit'></i>Log Progress</a>
-          <a class="btn"><i class='bx bx-calendar'></i>Book Session</a>
-        </div>
-      </section>
+<script>
+  // Open modals on button click
+  document.getElementById('logProgressBtn').addEventListener('click', () => {
+    document.getElementById('logProgressModal').style.display = 'block';
+  });
+
+  document.getElementById('bookSessionBtn').addEventListener('click', () => {
+    document.getElementById('bookSessionModal').style.display = 'block';
+  });
+
+  // Close modals
+  function closeModal(id){
+    document.getElementById(id).style.display = 'none';
+  }
+</script>
+
 
       <!-- KPIs -->
       <section class="grid">
@@ -330,33 +362,48 @@ $userRole = "Member"; // later you can make this dynamic from DB
         </div>
 
         <div class="card kpi">
-          <div>
-            <div class="meta">Hours Trained</div>
-            <div class="value">7h 30m</div>
-            <div class="spark">Target: 8h</div>
-          </div>
-          <i class='bx bx-time-five'></i>
-        </div>
+  <div>
+    <div class="meta">Hours Trained</div>
+    <div class="value" id="hoursTrained">
+      <?php echo $_SESSION['total_time'] ?? '0h 0m'; ?>
+    </div>
+    <div class="spark">Target: 8h</div>
 
-        <!-- Daily stats -->
-        <div class="card stats">
-          <div class="stat">
-            <div class="label">Steps</div>
-            <div class="num">8,932</div>
-          </div>
-          <div class="stat">
-            <div class="label">Active Minutes</div>
-            <div class="num">62</div>
-          </div>
-          <div class="stat">
-            <div class="label">Water Intake</div>
-            <div class="num">2.1 L</div>
-          </div>
-          <div class="stat">
-            <div class="label">Sleep</div>
-            <div class="num">7h 12m</div>
-          </div>
-        </div>
+    <!-- Training Timer UI -->
+    <div style="margin-top:10px;">
+      <div id="sessionTimer">0h 0m 0s</div>
+      <button type="button" id="startBtn" onclick="startTraining()">Start Training</button>
+      <button type="button" id="stopBtn" onclick="stopTraining()" disabled>Stop Training</button>
+    </div>
+  </div>
+  <i class='bx bx-time-five'></i>
+</div>
+
+
+
+
+
+
+
+<div class="card stats">
+  <div class="stat">
+    <div class="label">Steps</div>
+    <div class="num">8,932</div>
+  </div>
+  <div class="stat">
+    <div class="label">Active Minutes Today</div>
+    <div class="num" id="activeMinutes">0 Today</div>
+  </div>
+  <div class="stat">
+    <div class="label">Water Intake</div>
+    <div class="num">2.1 L</div>
+  </div>
+  <div class="stat">
+    <div class="label">Sleep</div>
+    <div class="num">7h 12m</div>
+  </div>
+</div>
+
 
         <!-- Chart -->
         <div class="card chart-card">
@@ -380,6 +427,67 @@ $userRole = "Member"; // later you can make this dynamic from DB
       </section>
     </main>
   </div>
+  <script>
+let timerInterval;
+let seconds = 0;
+
+function startTraining() {
+  document.getElementById("startBtn").disabled = true;
+  document.getElementById("stopBtn").disabled = false;
+  seconds = 0;
+
+  timerInterval = setInterval(() => {
+    seconds++;
+    let hrs = Math.floor(seconds / 3600);
+    let mins = Math.floor((seconds % 3600) / 60);
+    let secs = seconds % 60;
+    document.getElementById("sessionTimer").textContent = 
+      `${hrs}h ${mins}m ${secs}s`;
+  }, 1000);
+}
+function stopTraining() {
+  clearInterval(timerInterval); 
+  document.getElementById("startBtn").disabled = false;
+  document.getElementById("stopBtn").disabled = true;
+
+  fetch("log_training.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: "seconds=" + seconds
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("hoursTrained").textContent = data.total_time; 
+    document.getElementById("activeMinutes").textContent = data.active_minutes; 
+  });
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
 
   <script>
     // Sidebar dropdown toggles
