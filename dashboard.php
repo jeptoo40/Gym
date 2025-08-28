@@ -289,7 +289,7 @@ $userRole = "Member"; // later you can make this dynamic from DB
 
       <nav>
         <button class="nav-item active"><i class='bx bx-home'></i><span class="label">Home</span></button>
-        <button class="nav-item"><i class='bx bx-dumbbell'></i><span class="label">Workouts</span></button>
+        <button class="nav-item"><i class='bx bx-dumbbell'></i><span class="label">Your Workout Plan</span></button>
         
         <button class="nav-item"><i class='bx bx-bowl-hot'></i><span class="label">Nutrition</span></button>
 
@@ -387,7 +387,7 @@ $userRole = "Member"; // later you can make this dynamic from DB
   document.getElementById('bookSessionModal').style.display = 'block';
 });
 
-  // Close modals
+ 
   function closeModal(id){
     document.getElementById(id).style.display = 'none';
   }
