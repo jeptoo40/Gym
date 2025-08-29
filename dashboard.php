@@ -295,7 +295,7 @@ $userRole = "Member"; // later you can make this dynamic from DB
 
         <div class="dropdown" id="dd-gym">
           <button type="button">
-            <span class="left"><i class='bx bx-building-house'></i><span class="label">Gym Activities</span></span>
+            <span class="left"><i class='bx bx-building-house'></i><span class="label">Gym Types</span></span>
             <i class='bx bx-chevron-down chev'></i>
           </button>
           <div class="menu">
@@ -304,6 +304,7 @@ $userRole = "Member"; // later you can make this dynamic from DB
             <a href="#">Strength Training</a>
             <a href="#">Fat Loss</a>
             <a href="#">Cardio</a>
+            <a href="#">Crossfit Gyms</a>
           </div>
         </div>
 
@@ -311,7 +312,17 @@ $userRole = "Member"; // later you can make this dynamic from DB
           <button type="button">
             <span class="left"><i class='bx bx-book-open'></i><span class="label">Resources</span></span>
             <i class='bx bx-chevron-down chev'></i>
+
           </button>
+          <div class="menu">
+            <a href="#" >Our Customers</a>
+             <a href ="#">Gym software guide</a>
+             <a href ="#">Trust center</a>
+             <a href ="#">Terms of service</a>
+             <a href ="#">Privacy policy</a>
+             <a href ="#">Documentation</a>
+
+
           <div class="menu">
             <a href="#">Pricing</a>
             <a class="btn" id="bookSessionBtn"><i class='bx bx-calendar'></i>Book Session</a>
