@@ -291,7 +291,14 @@ $userRole = "Member"; // later you can make this dynamic from DB
         <button class="nav-item active"><i class='bx bx-home'></i><span class="label">Home</span></button>
         <button class="nav-item"><i class='bx bx-dumbbell'></i><span class="label">Your Workout Plan</span></button>
         
-        <button class="nav-item"><i class='bx bx-bowl-hot'></i><span class="label">Nutrition</span></button>
+     <!-- Example: user_sidebar.php -->
+<nav class="sidebar">
+  <button class="nav-item" onclick="window.location.href='nutrition_user.php'">
+    <i class='bx bx-bowl-hot'></i>
+    <span class="label">Nutrition</span>
+  </button>
+</nav>
+
 
         <div class="dropdown" id="dd-gym">
           <button type="button">

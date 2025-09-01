@@ -1,38 +1,30 @@
 <?php
-ob_start(); // ensure no output before headers
 session_start();
-include("admin signup.php");
+include("connect.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = trim($_POST['email'] ?? '');
-    $password = trim($_POST['password'] ?? '');
+    $trainer_id = $_POST['trainer_id'];
+    $password   = $_POST['password'];
 
-    if (!empty($email) && !empty($password)) {
-        $sql = "SELECT * FROM trainers WHERE email = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    // ✅ Get admin by trainer_id
+    $stmt = $conn->prepare("SELECT * FROM trainers WHERE trainer_id = ?");
+    $stmt->bind_param("s", $trainer_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        if ($result->num_rows === 1) {
-            $row = $result->fetch_assoc();
+    if ($result->num_rows == 1) {
+        $admin = $result->fetch_assoc();
 
-            // ✅ Verify hashed password
-            if (password_verify($password, $row['password'])) {
-                $_SESSION['user_id'] = $row['id'];
-                $_SESSION['user_name'] = $row['fullname'];
-                $_SESSION['user_email'] = $row['email'];
-
-                header("Location: dashboard.php");
-                exit();
-            } else {
-                echo "❌ Invalid password.";
-            }
+        // ✅ Verify password
+        if (password_verify($password, $admin['password'])) {
+            $_SESSION['trainer_id'] = $admin['trainer_id']; // store trainer_id
+            header("Location: admin dashboard.php");
+            exit();
         } else {
-            echo "❌ No account found with that email.";
+            echo "❌ Wrong password.";
         }
     } else {
-        echo "❌ Please enter both email and password.";
+        echo "❌ Trainer ID not found.";
     }
 }
 ?>
