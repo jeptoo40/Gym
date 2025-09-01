@@ -1,4 +1,4 @@
-A simple Gym Management System built with **HTML, CSS, PHP, and MySQL**.  
+A  Gym Management System built with **HTML & UI/UX, CSS, PHP, and MySQL**.  
 This project helps gyms manage members, trainers, bookings, and nutrition plans efficiently.
 
 
