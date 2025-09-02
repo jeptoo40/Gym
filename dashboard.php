@@ -289,7 +289,23 @@ $userRole = "Member"; // later you can make this dynamic from DB
 
       <nav>
         <button class="nav-item active"><i class='bx bx-home'></i><span class="label">Home</span></button>
-        <button class="nav-item"><i class='bx bx-dumbbell'></i><span class="label">Your Workout Plan</span></button>
+
+
+        
+        <button class="nav-item" onclick="window.location.href='workouts.php'">
+    <i class='bx bx-dumbbell'></i>
+    <span class="label">Your Workout Plan</span>
+  </button>
+
+
+
+
+
+
+
+
+
+
         
      <!-- Example: user_sidebar.php -->
 <nav class="sidebar">
@@ -339,7 +355,7 @@ $userRole = "Member"; // later you can make this dynamic from DB
         <div class="spacer"></div>
 
 <!-- Settings -->
-<a href="#" class="nav-item">
+<a href="settings.php" class="nav-item">
   <i class='bx bx-cog'></i>
   <span class="label">Settings</span>
 </a>
@@ -387,8 +403,8 @@ $userRole = "Member"; // later you can make this dynamic from DB
 
 </section>
 
-<!-- Include the modals here -->
-<?php include('modals.php'); ?> <!-- This file contains logProgressModal & bookSessionModal -->
+
+<?php include('modals.php'); ?> <!-- The file contains logProgressModal & bookSessionModal -->
 
 <script>
   // Open modals on button click
@@ -490,10 +506,16 @@ $userRole = "Member"; // later you can make this dynamic from DB
         <!-- Quick Actions -->
         <div class="quick">
           <a class="btn primary"><i class='bx bx-run'></i> Quick Start</a>
-          <a class="btn"><i class='bx bx-plus-circle'></i> Add Workout</a>
-          <a class="btn"><i class='bx bx-bowl-hot'></i> Log Meal</a>
+          <a href="workouts.php" class="btn"><i class='bx bx-plus-circle'></i> Add Workout</a>
+          <a href="nutrition_user.php" class="btn"><i class='bx bx-bowl-hot'></i> Log Meal</a>
           <a class="btn"><i class='bx bx-heart'></i> Add Goal</a>
-          <a class="btn"><i class='bx bx-download'></i> Export Report</a>
+
+
+          <a href="export_report.php" class="btn">
+    <i class='bx bx-download'></i> Export Report
+</a>
+
+
         </div>
       </section>
     </main>

@@ -15,6 +15,7 @@ $user_id = $_SESSION['user_id'];
 $base_url = "http://localhost/Gym/Admin/";
 
 
+
 // Fetch nutrition plans for this user
 $result = $conn->prepare("
     SELECT n.plan_name, n.description, n.gym_type, n.image, n.created_at
@@ -33,99 +34,124 @@ $plans = $result->get_result();
   <title>My Nutrition Plans</title>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <style>
+   
     body {
       font-family: "Segoe UI", Tahoma, sans-serif;
-      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      background: linear-gradient(135deg, #f1f8e9, #e0f7fa);
       margin: 0;
       padding: 0;
     }
 
     header {
-      background: darkslategrey;
+      background: #2e7d32;
       color: #fff;
-      padding: 20px;
+      padding: 25px;
       text-align: center;
       box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
     }
 
     header h1 {
       margin: 0;
-      font-size: 28px;
+      font-size: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .container {
-      max-width: 900px;
-      margin: 30px auto;
+      max-width: 1100px;
+      margin: 40px auto;
       padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
     }
 
     .back-btn {
-      display: inline-block;
-      margin-bottom: 20px;
-      padding: 10px 18px;
-      background: #2e7d32;
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s;
-    }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  background: black;
+  color: palevioletred;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 18px;
+  position: fixed;  /* floating in top-left corner */
+  top: 20px;
+  left: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
 
-    .back-btn:hover {
-      background: #1b5e20;
-    }
+.back-btn:hover {
+  background: burlywood;
+  transform: scale(1.1);
+}
+
 
     .plan {
       background: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
     }
 
     .plan:hover {
-      transform: translateY(-5px);
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .plan img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .plan-content {
+      padding: 20px;
+      flex-grow: 1;
     }
 
     .plan h2 {
       margin: 0 0 10px;
+      font-size: 22px;
       color: #2e7d32;
     }
 
     .plan p {
       margin: 6px 0;
       line-height: 1.6;
-      color: #444;
-    }
-
-    .plan img {
-      margin-top: 15px;
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-      border: 2px solid #eee;
+      color: #555;
+      font-size: 15px;
     }
 
     .date {
       font-size: 0.85em;
       color: #777;
-      margin-top: 10px;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .no-plan {
+      grid-column: 1 / -1;
       text-align: center;
       background: #fff;
-      padding: 40px;
-      border-radius: 12px;
+      padding: 50px;
+      border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       font-size: 18px;
-      color: #555;
+      color: #666;
     }
+ 
   </style>
 </head>
 <body>
@@ -143,7 +169,9 @@ $plans = $result->get_result();
           <p><strong>Gym Type:</strong> <?= htmlspecialchars($p['gym_type']); ?></p>
           <p><?= nl2br(htmlspecialchars($p['description'])); ?></p>
           <?php if (!empty($p['image'])): ?>
-            <img src="<?= htmlspecialchars($base_url . $p['image']); ?>" alt="Nutrition Plan Image">
+            <img src="/Admin/<?= htmlspecialchars($p['image']); ?>" alt="Nutrition Image">
+
+
 
           <?php endif; ?>
           <p class="date">Assigned: <?= $p['created_at']; ?></p>

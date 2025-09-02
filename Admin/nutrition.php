@@ -2,7 +2,7 @@
 session_start();
 include("connect.php");
 
-// Ensure admin logged in
+
 if (!isset($_SESSION['trainer_id'])) {
     header("Location: login.php");
     exit();
@@ -131,7 +131,7 @@ $nutritionPlans = $conn->query("
 
     .btn-container {
   display: flex;
-  justify-content: flex-end; /* pushes button to right */
+  justify-content: flex-end; 
   margin-bottom: 15px;
 }
 .back-btn {
@@ -215,7 +215,7 @@ $nutritionPlans = $conn->query("
         <input type="file" name="image" accept="image/*">
 
         <button type="submit"><i class='bx bx-plus'></i> Assign Plan</button>
-              <!-- Back to Dashboard Button -->
+            
               <div class="btn-container">
               <a href="admin dashboard.php" class="back-btn">
                <i class='bx bx-arrow-back'></i> Back to Dashboard

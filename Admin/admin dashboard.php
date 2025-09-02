@@ -165,15 +165,26 @@ $bookings = $conn->query("SELECT * FROM bookings ORDER BY created_at DESC");
   <div class="sidebar">
     <h2>Admin Panel</h2>
     <a href="#"><i class='bx bx-home'></i> Dashboard</a>
-    <a href="#"><i class='bx bx-user'></i>Total Users</a>
+
+    <a href="users.php"><i class='bx bx-user'></i>Total Users</a>
+
+
+
+
     <a href="#"><i class='bx bx-calendar'></i> Bookings</a>
     <a href="workouts.php"><i class='bx bx-dumbbell'></i> Workouts</a>
 
-    <a href="#"><i class='bx bx-bar-chart'></i> Reports</a>
-    <a href="#"><i class='bx bx-user'></i>User Profile</a>
+    <a href="view_reports.php"><i class='bx bx-bar-chart'></i> Reports</a>
+
+
+    <a href="user_profile.php"><i class='bx bx-user'></i>User Profile</a>
+
+    
     <a href="nutrition.php"><i class='bx bx-dish'></i> Nutrition Plans</a>
 
-    <a href="#"><i class='bx bx-cog'></i> Settings</a>
+    <a href="settings.php"><i class='bx bx-cog'></i> Settings</a>
+
+    
   </div>
 
   <!-- Main content -->
